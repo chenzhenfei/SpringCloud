@@ -17,6 +17,9 @@ import com.springboot.auth.authorization.oauth2.granter.MobileAuthenticationProv
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * OAuth2 安全配置
+ */
 @Slf4j
 @Configuration
 @EnableWebSecurity

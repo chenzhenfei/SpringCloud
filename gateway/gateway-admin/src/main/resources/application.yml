@@ -4,6 +4,12 @@ spring:
     port: ${RABBIT_MQ_PORT:5672}
     username: ${RABBIT_MQ_USERNAME:guest}
     password: ${RABBIT_MQ_PASSWORD:guest}
+    #开启消息确认模式
+    publisher-confirms: true
+    #开始返回机制，接收返回消息
+    publisher-returns: true
+
+
   redis:
     host: ${REDIS_HOST:localhost}
     port: ${REDIS_PORT:6379}

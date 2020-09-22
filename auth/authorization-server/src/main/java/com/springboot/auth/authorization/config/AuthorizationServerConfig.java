@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
@@ -33,10 +34,12 @@ import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ *  实现客户端管理
+ */
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
@@ -55,6 +58,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Value("${spring.security.oauth2.jwt.signingKey}")
     private String signingKey;
 
+    /**
+     * 定义令牌端点上的安全约束。
+     * @param oauthServer
+     */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         // 支持将client参数放在header或body中
@@ -69,6 +76,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         clients.jdbc(dataSource);
     }
 
+    /**
+     * 定义授权和令牌端点以及令牌服务。
+     * @param endpoints
+     */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         // 配置token的数据源、自定义的tokenServices等信息,配置身份认证器，配置认证方式，TokenStore，TokenGranter，OAuth2RequestFactory
